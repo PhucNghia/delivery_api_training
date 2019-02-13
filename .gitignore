@@ -25,3 +25,4 @@ api/coverage/*
 api/spec/factories/*
 api/.rspec
 api/Gemfile.lock
+api/config/master.key
