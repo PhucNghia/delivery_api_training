@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Order, type: :model do
   it{is_expected.to have_many(:products).dependent(:destroy)}
   it{is_expected.to belong_to(:status)}
+  it{is_expected.to belong_to(:user)}
   it do
     is_expected.to belong_to(:bill_address)
       .dependent(:destroy)
