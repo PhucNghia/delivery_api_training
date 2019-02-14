@@ -4,5 +4,6 @@ FactoryBot.define do
     bill_address
     ship_address
     status
+    user
   end
 end

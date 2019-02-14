@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :authorized?
   before_action :load_user, only: :create
 
   def create
