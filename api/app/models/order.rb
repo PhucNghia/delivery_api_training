@@ -10,4 +10,8 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :bill_address
   accepts_nested_attributes_for :ship_address
   validates :amount, presence: true
+
+  def owner?(user)
+    user_id == user.id
+  end
 end
