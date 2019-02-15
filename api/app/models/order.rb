@@ -6,12 +6,21 @@ class Order < ApplicationRecord
     dependent: :destroy, optional: true
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: "Address",
     dependent: :destroy, optional: true
-  accepts_nested_attributes_for :products
+  accepts_nested_attributes_for :products, allow_destroy: true
   accepts_nested_attributes_for :bill_address
   accepts_nested_attributes_for :ship_address
   validates :amount, presence: true
+  validate :must_have_product
 
   def owner?(user)
     user_id == user.id
+  end
+
+  private
+
+  def must_have_product
+    if products.empty?
+      errors.add(:order, "must have at least one product")
+    end
   end
 end

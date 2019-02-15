@@ -77,6 +77,7 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
   describe "POST #create" do
     let(:params) do
       {
+        products_attributes: [attributes_for(:product)],
         bill_address_attributes: attributes_for(:bill_address),
         ship_address_attributes: attributes_for(:ship_address),
         status_id: create(:status).id,
