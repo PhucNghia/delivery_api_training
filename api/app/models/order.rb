@@ -3,9 +3,9 @@ class Order < ApplicationRecord
   belongs_to :status
   belongs_to :user
   belongs_to :bill_address, foreign_key: :bill_address_id, class_name: "Address",
-    dependent: :destroy, optional: true
+    dependent: :destroy
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: "Address",
-    dependent: :destroy, optional: true
+    dependent: :destroy
   accepts_nested_attributes_for :products, allow_destroy: true
   accepts_nested_attributes_for :bill_address
   accepts_nested_attributes_for :ship_address
