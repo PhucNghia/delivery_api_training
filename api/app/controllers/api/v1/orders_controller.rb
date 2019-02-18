@@ -36,7 +36,7 @@ class Api::V1::OrdersController < ApplicationController
 
   def order_params
     params.permit :amount, :status_id, bill_address_attributes: [:name, :tel, :address],
-      ship_address_attributes: [:name, :tel, :address]
+      ship_address_attributes: [:name, :tel, :address], products_attributes: [:id, :name, :weight, :quantity, :_destroy]
   end
 
   def load_order
