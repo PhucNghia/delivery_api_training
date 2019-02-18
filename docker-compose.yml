@@ -11,6 +11,23 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Abc@123
 
+  redis:
+    image: "redis:5.0-alpine"
+    container_name: redis
+
+  sidekiq:
+    container_name: sidekiq
+    restart: always
+    depends_on:
+      - mysql
+      - redis
+    build: ./api
+    command: bundle exec sidekiq
+    volumes:
+      - ./api:/delivery/api
+    environment:
+      - REDIS_URL=redis://redis:6379
+
   delivery-api:
     build: ./api
     container_name: delivery-api
@@ -22,6 +39,9 @@ services:
       - "3000:3000"
     depends_on:
       - mysql
+    environment:
+      - REDIS_URL=redis://redis:6379
 volumes:
   db_data:
   web_rubygems:
+  redis:
