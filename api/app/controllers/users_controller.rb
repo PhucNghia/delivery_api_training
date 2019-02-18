@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :authorized?
+  skip_before_action :authorized?, only: :create
 
   def create
     @user = User.new user_params
@@ -11,9 +11,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    current_user.update user_update_params
+    render json: current_user
+  end
+
   private
 
   def user_params
     params.permit :username, :password, :password_confirmation
+  end
+
+  def user_update_params
+    params.permit :callback_link
   end
 end
