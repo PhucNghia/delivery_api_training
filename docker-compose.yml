@@ -25,6 +25,7 @@ services:
     command: bundle exec sidekiq
     volumes:
       - ./api:/delivery/api
+      - web_rubygems:/usr/local/bundle
     environment:
       - REDIS_URL=redis://redis:6379
 
@@ -43,6 +44,8 @@ services:
       - sidekiq
     environment:
       - REDIS_URL=redis://redis:6379
+    stdin_open: true
+    tty: true
 volumes:
   db_data:
   web_rubygems:
