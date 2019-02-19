@@ -46,6 +46,20 @@ services:
       - REDIS_URL=redis://redis:6379
     stdin_open: true
     tty: true
+
+  vue:
+    image: "node"
+    container_name: delivery-vue
+    working_dir: /delivery/vue
+    volumes:
+      - ./vue:/delivery/vue
+    ports:
+      - "8080:8080"
+    command: bash -c "npm run serve"
+    depends_on:
+      - delivery-api
+    environment:
+      PORT: 8080
 volumes:
   db_data:
   web_rubygems:
