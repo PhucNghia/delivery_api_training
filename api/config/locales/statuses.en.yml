@@ -1,0 +1,4 @@
+en:
+  statuses:
+    errors:
+      not_found: "Status not found"

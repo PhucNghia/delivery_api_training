@@ -1,0 +1,4 @@
+en:
+  products:
+    errors:
+      not_found: "Status not found"

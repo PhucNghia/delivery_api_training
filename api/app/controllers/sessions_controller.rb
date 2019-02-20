@@ -4,7 +4,11 @@ class SessionsController < ApplicationController
 
   def create
     if @user.authenticate(params[:password])
-      render json: { token: @user.token_generate }, status: :ok
+      render json: {
+          token: @user.token_generate,
+          user: @user.as_json(only: [:id, :username, :callback_link])
+        },
+        status: :ok
     else
       unauthorized_error_response I18n.t("authenticate.errors.username_or_password_incorrect")
     end

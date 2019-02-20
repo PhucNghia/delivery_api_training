@@ -13,6 +13,11 @@ RSpec.describe UsersController, type: :controller do
         expect(user_record_name).to eq("username")
       end
 
+      it "don't return password_digest" do
+        result = JSON.parse(response.body)["user"]["password_digest"]
+        expect(result).to be_nil
+      end
+
       it "return valid token" do
         token = JSON.parse(response.body)["token"]
         expect(token).not_to be_nil

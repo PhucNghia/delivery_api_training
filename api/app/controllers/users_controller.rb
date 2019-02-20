@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     if @user.save
-      render json: { user: @user, token: @user.token_generate },
+      render json: {
+          user: @user.as_json(only: [:id, :username, :callback_link]),
+          token: @user.token_generate
+        },
         status: :created
     else
       unprocessable_entity_error_response @user.errors.full_messages

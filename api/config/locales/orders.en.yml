@@ -1,0 +1,4 @@
+en:
+  orders:
+    errors:
+      not_found: "Status not found"
