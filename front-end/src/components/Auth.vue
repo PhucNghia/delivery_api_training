@@ -1,5 +1,10 @@
 <template>
   <div id="Auth">
+    <div class="form" v-if="has_error">
+      <div class="alert alert-warning" role="alert">
+        {{ error.message }}
+      </div>
+    </div>
     <div class="form">
       <form>
         <div class="form-group">
@@ -12,12 +17,13 @@
           <input type="password" class="form-control" placeholder="Password confirmation" v-model="user.password_confirmation">
         </div>
         <div>
-          <button type="submit" class="btn btn-primary" v-if="state.sign_up" @click.prevent="sign_up">
-            Sign Up
-          </button>
-          <button type="submit" class="btn btn-primary" v-else @click.prevent="sign_in">
-            Sign In
-          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            v-if="state.sign_up"
+            @click.prevent="sign_up"
+          >Sign Up</button>
+          <button type="submit" class="btn btn-primary" v-else @click.prevent="sign_in">Sign In</button>
         </div>
       </form>
     </div>
@@ -29,15 +35,16 @@
 </template>
 
 <script>
-const HOST = "http://localhost:3000"
-import axios from 'axios'
+const HOST = "http://localhost:3000";
+import axios from "axios";
 
 export default {
   name: "Auth",
   data: function() {
     return {
+      error: {},
       state: {
-        sign_up: false,
+        sign_up: false
       },
       user: {
         username: "",
@@ -47,40 +54,42 @@ export default {
     };
   },
   computed: {
+    has_error() {
+      return Object.keys(this.error).length > 0
+    },
+
     this_sign_up() {
       return this.state.sign_up;
     }
   },
   watch: {
     this_sign_up() {
-      this.user.password_confirmation = ""
+      this.user.password_confirmation = "";
     }
   },
   methods: {
     sign_up() {
-      axios.post(HOST + "/sign_up", this.user)
+      axios
+        .post(HOST + "/sign_up", this.user)
         .then(res => {
-          this.$emit('sign_in', res.data);
+          this.$emit("sign_in", res.data);
           this.clear_input();
         })
         .catch(error => {
-          if(error.response) {
-            alert('error');
-          }
-        })
+          this.error = error.response.data;
+        });
     },
 
     sign_in() {
-      axios.post(HOST + "/sign_in", this.user)
+      axios
+        .post(HOST + "/sign_in", this.user)
         .then(res => {
-          this.$emit('sign_in', res.data);
+          this.$emit("sign_in", res.data);
           this.clear_input();
         })
         .catch(error => {
-          if(error.response) {
-            alert('error');
-          }
-        })
+          this.error = error.response.data;
+        });
     },
 
     clear_input() {
@@ -88,7 +97,7 @@ export default {
         username: "",
         password: "",
         password_confirmation: ""
-      }
+      };
     }
   }
 };
@@ -105,7 +114,7 @@ export default {
     margin: 100px auto 0;
     padding: 2rem;
     border-radius: 0.5rem;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
   }
   .sub {
     width: 25%;
