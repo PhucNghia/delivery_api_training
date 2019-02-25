@@ -1,0 +1,17 @@
+version: "3"
+services:
+  delivery-front-end:
+    image: node
+    container_name: delivery-front-end
+    command: npm run serve
+    working_dir: /delivery/front-end
+    volumes:
+      - .:/delivery/front-end
+    ports:
+      - "8080:8080"
+    networks:
+      - delivery_backend
+
+networks:
+  delivery_backend:
+    external: true
