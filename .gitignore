@@ -29,7 +29,7 @@ api/config/master.key
 
 front-end/.DS_Store
 front-end/node_modules
-front-end/coverage
+front-end/coverage/*
 front-end/dist
 front-end/.env.local
 front-end/.env.*.local
